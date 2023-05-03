@@ -88,7 +88,9 @@ export async function createReservation(reservation, signal) {
      headers,
      signal,
    };
-   return await fetchJson(url, options, reservation);
+   return await fetchJson(url, options, reservation)
+   .then(formatReservationDate)
+   .then(formatReservationTime);
  }
  
  export async function readReservation(reservation_id, signal) {

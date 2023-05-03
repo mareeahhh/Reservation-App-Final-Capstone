@@ -189,6 +189,7 @@ async function update(req, res,){
     // console.log()
     const updatedRes = await reservationsService.update(reservation);
     const result = updatedRes[0];
+    console.log("editSuccessful", result)
     res.status(200).json({ data: result });
   }
   

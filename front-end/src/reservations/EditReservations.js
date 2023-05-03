@@ -11,73 +11,85 @@ const initialFormData = {
     mobile_number:"",
     reservation_date:"",
     reservation_time:"",
-    people:"",
+    people:"1",
   };
 
   function EditReservations(){
-    const {reservation_id} = useParams();
-    const [reservationError, setReservationError] = useState();
-    const [formData, setFormData] = useState(initialFormData);
     const history = useHistory();
-
-    useEffect(() => {
-        async function loadReservationData() {
-            const abortController = new AbortController();
-            setReservationError(null);
-            try {
-                const res = await readReservation(
-                    reservation_id,
-                    abortController.signal,
-                )
-                setFormData({
-                    first_name: res.first_name,
-                    last_name: res.last_name,
-                    mobile_number: res.mobile_number,
-                    reservation_date: res.reservation_date,
-                    reservation_time: res.reservation_time,
-                    people: res.people,
-                });
-            } catch (error) {
-                setReservationError(error);
-            }
-            return () => abortController.abort();
-        }
-        loadReservationData()
-    }, [reservation_id]);
-
-    const changeHandler = (e) => {
-        const {target} = e;
-        setFormData({ ...formData, [target.id]: target.value });
-
-    };
-
-    async function onSubmit(event) {
-      event.preventDefault();
-      const abortController = new AbortController();
-      try {
-        await updateReservation(
-          {
-            ...formData,
-            people: parseInt(formData.people),
-          },
-          reservation_id,
-          abortController.signal,
-        );
-        history.push(`/dashboard?date=${formData.reservation_date}`);
-      } catch (error) {
-        setReservationError(error);
-      }
-    }
-  
+    
+    
     return (
       <div>
         <h1>Edit Reservation</h1>
-        <ErrorAlert error={reservationError} />
-        <ReservationForm
-          reservation={formData}
-          handleChange={changeHandler}
-          onSubmit={onSubmit}
-        />
+        {/* <ErrorAlert error={reservationError} /> */}
+        <form>
+      <fieldset>
+        <div >
+          <label htmlFor="first_name">First Name</label>
+          <input
+            name="first_name"
+            id="first_name"
+            type="text"
+            // value={reservation.first_name}
+            // onChange={changeHandler}
+            ></input>
+        </div>
+        <div >
+          <label htmlFor="last_name">Last Name</label>
+          <input
+            name="last_name"
+            id="last_name"
+            type="text"
+            // value={reservation.last_name}
+            // onChange={changeHandler}
+            ></input>
+        </div>
+        <div >
+          <label htmlFor="mobile_number">Mobile Number</label>
+          <input
+            name="mobile_number"
+            id="mobile_number"
+            type="telephone"
+            pattern="[\d-]+"
+            // value={reservation.mobile_number}
+            // onChange={changeHandler}
+            ></input>
+        </div>
+        <div >
+          <label htmlFor="reservation_date">Reservation Date</label>
+          <input
+            name="reservation_date"
+            id="reservation_date"
+            type="date"
+            // value={reservation.reservation_date}
+            // onChange={changeHandler}
+            ></input>
+        </div>
+        <div >
+          <label htmlFor="reservation_time">Reservation Time</label>
+          <input
+            name="reservation_time"
+            id="reservation_time"
+            type="time"
+            // value={reservation.reservation_time}
+            // onChange={changeHandler}
+            ></input>
+        </div>
+        <div >
+          <label htmlFor="people">Number of People</label>
+          <input
+            name="people"
+            id="people"
+            type="number"
+            min="1"
+            // value={reservation.people}
+            // onChange={changeHandler}
+            ></input>
+        </div>
+      </fieldset>
+      <button type="button" onClick={() => history.goBack()}> Cancel </button>
+        <button type="submit"> Submit Edit </button>
+    </form>
       </div>
     );
   }

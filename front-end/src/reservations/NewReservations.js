@@ -14,7 +14,7 @@ const initialFormData = {
     people:"1",
   };
 
-function NewReservations({ date }){
+function NewReservations(){
     const history = useHistory();
     const [reservationError, setReservationError] = useState(null);
     const [reservation, setReservation] = useState(initialFormData);

@@ -70,7 +70,7 @@ function ListReservations({ reservations }){
                     </Link>
                     {reservation.status !== "cancelled" && (
                       <button
-                        data-reservation-id-statu={reservation.reservation_id}
+                        data-reservation-id-status={reservation.reservation_id}
                         onClick={() => onCancel(reservation.reservation_id)}>
                         Cancel
                       </button>
