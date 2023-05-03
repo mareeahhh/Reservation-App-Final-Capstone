@@ -102,7 +102,7 @@ function resStatus(req,res,next) {
   function checkTime(req, res, next) {
     const { data = {} } = req.body;
     const time = data["reservation_time"];
-    console.log("HALP", time)
+    // console.log("HALP", time)
   
     if (!/^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(time)) {
       next({

@@ -30,6 +30,20 @@ function SeatTable() {
     }
   };
 
+  // async function handleClear(event) {
+  //   const abortController = new AbortController();
+  //   event.preventDefault();
+  //   setError(null);
+  //   if (window.confirm("Is this table ready to seat new guests? This cannot be undone.")) {
+  //     await updateResStatus({ status: "finished"}, currentTable.reservation_id, abortController.signal);
+  //     const newTable = await clearAndLoadTables();
+  //     console.log(newTable);
+  //     history.push("/tables");
+  //     return;
+  //   }
+     
+  // }
+
   return (
     <div>
       <h4 >Tables</h4>

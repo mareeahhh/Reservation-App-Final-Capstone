@@ -31,7 +31,7 @@ import ErrorAlert from "../layout/ErrorAlert";
     
       const submitHandler = (event) => {
         event.preventDefault();
-        console.log("Submitted:", currentRes);
+        // console.log("Submitted:", currentRes);
         updateReservation({
           ...currentRes,
           people: Number(currentRes.people),
