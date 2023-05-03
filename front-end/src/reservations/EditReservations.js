@@ -3,26 +3,52 @@ import { useHistory, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { updateReservation, readReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
-import ReservationForm from "./ReservationForm";
 
-const initialFormData = {
-    first_name:"",
-    last_name:"",
-    mobile_number:"",
-    reservation_date:"",
-    reservation_time:"",
-    people:"1",
-  };
+  function EditReservations() { 
+    const {reservation_id} = useParams();
+      const [currentRes, setCurrentRes] = useState({ reservation_id });
+      const [reservationError, setReservationError] = useState(null);
+      const history = useHistory();
 
-  function EditReservations(){
-    const history = useHistory();
+      useEffect(() => {
+        readReservation(reservation_id)
+        .then((response) => {
+          setCurrentRes({
+            ...response,
+            people: Number(response.people),
+            reservation_time: response.reservation_time.substring(0,response.reservation_time.length-3)
+          })
+        })
+        .catch(setReservationError);
+      }, [reservation_id]);
+
+      const changeHandler = ({ target }) => {
+        setCurrentRes({
+          ...currentRes,
+          [target.name]: target.value,
+        })
+      };
+    
+      const submitHandler = (event) => {
+        event.preventDefault();
+        console.log("Submitted:", currentRes);
+        updateReservation({
+          ...currentRes,
+          people: Number(currentRes.people),
+        })
+        .then((response) =>{
+        setCurrentRes({ ...response })
+        history.push(`/dashboard?date=${currentRes.reservation_date}`)
+        })
+        .catch(setReservationError)
+      };
     
     
     return (
       <div>
         <h1>Edit Reservation</h1>
-        {/* <ErrorAlert error={reservationError} /> */}
-        <form>
+        <ErrorAlert error={reservationError} />
+        <form onSubmit={submitHandler}>
       <fieldset>
         <div >
           <label htmlFor="first_name">First Name</label>
@@ -30,8 +56,9 @@ const initialFormData = {
             name="first_name"
             id="first_name"
             type="text"
-            // value={reservation.first_name}
-            // onChange={changeHandler}
+            required={true}
+            value={currentRes.first_name}
+            onChange={changeHandler}
             ></input>
         </div>
         <div >
@@ -40,8 +67,9 @@ const initialFormData = {
             name="last_name"
             id="last_name"
             type="text"
-            // value={reservation.last_name}
-            // onChange={changeHandler}
+            required={true}
+            value={currentRes.last_name}
+            onChange={changeHandler}
             ></input>
         </div>
         <div >
@@ -51,8 +79,9 @@ const initialFormData = {
             id="mobile_number"
             type="telephone"
             pattern="[\d-]+"
-            // value={reservation.mobile_number}
-            // onChange={changeHandler}
+            required={true}
+            value={currentRes.mobile_number}
+            onChange={changeHandler}
             ></input>
         </div>
         <div >
@@ -61,8 +90,9 @@ const initialFormData = {
             name="reservation_date"
             id="reservation_date"
             type="date"
-            // value={reservation.reservation_date}
-            // onChange={changeHandler}
+            required={true}
+            value={currentRes.reservation_date}
+            onChange={changeHandler}
             ></input>
         </div>
         <div >
@@ -71,8 +101,9 @@ const initialFormData = {
             name="reservation_time"
             id="reservation_time"
             type="time"
-            // value={reservation.reservation_time}
-            // onChange={changeHandler}
+            required={true}
+            value={currentRes.reservation_time}
+            onChange={changeHandler}
             ></input>
         </div>
         <div >
@@ -82,8 +113,9 @@ const initialFormData = {
             id="people"
             type="number"
             min="1"
-            // value={reservation.people}
-            // onChange={changeHandler}
+            required={true}
+            value={currentRes.people}
+            onChange={changeHandler}
             ></input>
         </div>
       </fieldset>
@@ -95,4 +127,3 @@ const initialFormData = {
   }
 
   export default EditReservations;
-  

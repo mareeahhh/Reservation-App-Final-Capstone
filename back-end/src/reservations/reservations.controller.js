@@ -35,6 +35,7 @@ function checkData(req, res, next) {
     const lastName = req.body.data.last_name;
     const phone = req.body.data.mobile_number;
     const date = req.body.data.reservation_date;
+    // console.log("HALP", req.body)
 
     if (!firstName) {
         return next({
@@ -101,6 +102,7 @@ function resStatus(req,res,next) {
   function checkTime(req, res, next) {
     const { data = {} } = req.body;
     const time = data["reservation_time"];
+    console.log("HALP", time)
   
     if (!/^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(time)) {
       next({
@@ -186,7 +188,7 @@ async function create(req, res) {
 
 async function update(req, res,){
     const reservation = req.body.data;
-    // console.log()
+    console.log(reservation)
     const updatedRes = await reservationsService.update(reservation);
     const result = updatedRes[0];
     console.log("editSuccessful", result)

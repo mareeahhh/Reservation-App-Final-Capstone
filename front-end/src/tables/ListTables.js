@@ -1,40 +1,19 @@
-import React, { useState } from "react";
-import { listTables, updateStatus } from "../utils/api"
+import React from "react";
+import { updateStatus } from "../utils/api"
 import { useHistory, Link } from "react-router-dom";
-import ErrorAlert from "../layout/ErrorAlert";
 
 function ListReservations({ reservations }){
     const history = useHistory()
-    const [reservationsError, setReservationsError] = useState(null)
-    
 
     const onCancel = async (reservation_id) => {
         if (window.confirm("Are you sure you want to cancel this reservation? This cannot be undone")) {
-            await updateStatus({status: "cancelled"},reservation_id,)
-            .then(() => {
-              listTables()
-              history.push("/dashboard")
-            })
-            .catch(setReservationsError)
+            await updateStatus(reservation_id, "cancelled");
+            history.go(0);
         }
     };
-
-    // const onCancel = (event) => {
-    //   event.preventDefault();
-    //   setReservationsError(null);
-    //   if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {
-    //     updateStatus({status: "cancelled"}, reservation_id)
-    //     .then(() => {
-    //       listTables()
-    //       history.push("/dashboard");
-    //     })
-    //     .catch(setReservationsError)
-    //   }
-    // }
     
     return (
         <div>
-              <ErrorAlert error={reservationsError} />
           <div>
             <h4>Reservations</h4>
           </div>
@@ -85,15 +64,13 @@ function ListReservations({ reservations }){
                       <Link to={`/reservations/${reservation.reservation_id}/seat`}>
                         <button>Seat</button>
                       </Link>
-                      )}
-                    {reservation.status === "booked" && (
+                    )}
                     <Link to={`/reservations/${reservation.reservation_id}/edit`}>
                       <button>Edit</button>
                     </Link>
-                    )}
                     {reservation.status !== "cancelled" && (
                       <button
-                      data-reservation-id-cancel={reservation.reservation_id}
+                        data-reservation-id-statu={reservation.reservation_id}
                         onClick={() => onCancel(reservation.reservation_id)}>
                         Cancel
                       </button>

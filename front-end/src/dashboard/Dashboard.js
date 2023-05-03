@@ -20,7 +20,6 @@ function Dashboard({ date }) {
   useEffect(loadDashboard, [date]);
 
   function loadDashboard() {
-    // console.log("DASHBOARD LAUNCHED")
     const abortController = new AbortController();
     setReservationsError(null);
     setReservations([]);

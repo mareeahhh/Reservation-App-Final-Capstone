@@ -9,7 +9,7 @@ const initialFormData = {
   mobile_number:"",
 };
 
-function Search() {
+function SearchReservation() {
   const [searchForm, setSearchForm] = useState(initialFormData);
   const [reservations, setReservations] = useState(null);
   const [error, setError] = useState(null);
@@ -62,4 +62,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default SearchReservation;
