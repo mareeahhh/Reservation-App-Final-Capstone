@@ -25,24 +25,11 @@ function SeatTable() {
       )
     ) {
       await finishTable(table_id);
-      history.push("/dashboard");
+      // history.push("/dashboard");
       history.go(0);
     }
   };
 
-  // async function handleClear(event) {
-  //   const abortController = new AbortController();
-  //   event.preventDefault();
-  //   setError(null);
-  //   if (window.confirm("Is this table ready to seat new guests? This cannot be undone.")) {
-  //     await updateResStatus({ status: "finished"}, currentTable.reservation_id, abortController.signal);
-  //     const newTable = await clearAndLoadTables();
-  //     console.log(newTable);
-  //     history.push("/tables");
-  //     return;
-  //   }
-     
-  // }
 
   return (
     <div>
